@@ -40,7 +40,7 @@ namespace SarahApp
     public sealed partial class MainPage : Page
     {
         private AzureBlobHelper BlobEngine;
-        static AzureIoT iot = new AzureIoT();
+        static MqttService iot = new MqttService();
         static List<DeviceData> Devices = DeviceData.GetAllDevices();
         public enum Genre { Rock, Slow, Blues, Jazz, Electro };
 
@@ -113,18 +113,14 @@ namespace SarahApp
             if (client == null)
             {
                 // create client instance 
-
                 client = new MqttClient(APPCONTANTS.MQTT_SERVER);
                 string clientId = Guid.NewGuid().ToString();
                 client.Connect(clientId, APPCONTANTS.MQTT_USER, APPCONTANTS.MQTT_PASS);
                 SubscribeMessage();
-
             }
             if (timer == null)
             {
                 timer = new Timer(OnTimerTick, null, new TimeSpan(0, 0, 1), new TimeSpan(0, APPCONTANTS.IntervalTimerMin, 0));
-
-
             }
         }
 
@@ -673,22 +669,28 @@ namespace SarahApp
                                      }
 
                                  }*/
-                                var genre = Genre.Slow;
-                                switch (tag)
+                                try
                                 {
-                                    case TagCommands.PlayBlues: genre = Genre.Blues; break;
-                                    case TagCommands.PlayRock: genre = Genre.Rock; break;
-                                    case TagCommands.PlaySlow: genre = Genre.Slow; break;
-                                    case TagCommands.PlayJazz: genre = Genre.Jazz; break;
-                                    case TagCommands.PlayElectro: genre = Genre.Electro; break;
+                                    var genre = Genre.Slow;
+                                    switch (tag)
+                                    {
+                                        case TagCommands.PlayBlues: genre = Genre.Blues; break;
+                                        case TagCommands.PlayRock: genre = Genre.Rock; break;
+                                        case TagCommands.PlaySlow: genre = Genre.Slow; break;
+                                        case TagCommands.PlayJazz: genre = Genre.Jazz; break;
+                                        case TagCommands.PlayElectro: genre = Genre.Electro; break;
+                                    }
+                                    var rnd = new Random(Environment.TickCount);
+                                    var selIds = SongIDs[genre];
+                                    var num = rnd.Next(0, selIds.Length - 1);
+                                    var url = await YouTube.GetVideoUriAsync(selIds[num], YouTubeQuality.QualityLow);
+                                    MediaPlayerHelper.CleanUpMediaPlayerSource(Player1.MediaPlayer);
+                                    Player1.MediaPlayer.Source = new MediaItem(url.Uri.ToString()).MediaPlaybackItem;
+                                    Player1.MediaPlayer.Play();
+                                }catch(Exception ex)
+                                {
+                                    Debug.WriteLine(ex);
                                 }
-                                var rnd = new Random(Environment.TickCount);
-                                var selIds = SongIDs[genre];
-                                var num = rnd.Next(0, selIds.Length - 1);
-                                var url = await YouTube.GetVideoUriAsync(selIds[num], YouTubeQuality.QualityLow);
-                                MediaPlayerHelper.CleanUpMediaPlayerSource(Player1.MediaPlayer);
-                                Player1.MediaPlayer.Source = new MediaItem(url.Uri.ToString()).MediaPlaybackItem;
-                                Player1.MediaPlayer.Play();
                             }
 
                             break;

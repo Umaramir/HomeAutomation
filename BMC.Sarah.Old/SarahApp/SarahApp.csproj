@@ -111,6 +111,7 @@
     <Compile Include="Libs\JokeHelper.cs" />
     <Compile Include="Libs\LuisHelper.cs" />
     <Compile Include="Libs\MediaPlayerHelper.cs" />
+    <Compile Include="Libs\MqttService.cs" />
     <Compile Include="Libs\SpeechHelper.cs" />
     <Compile Include="Libs\TagCommands.cs" />
     <Compile Include="Libs\WebcamHelper.cs" />
