@@ -9,7 +9,7 @@ using System.Web;
 namespace BMC.Sarah.ChatBot.Dialogs
 {
     [Serializable]
-    public class ToiletLamp : IDialog<object>
+    public class KitchenFan : IDialog<object>
     {
         public async Task StartAsync(IDialogContext context)
         {
@@ -27,7 +27,7 @@ namespace BMC.Sarah.ChatBot.Dialogs
             {
                 Type = "openUrl",
                 Title = "TurnOn",
-                Value = $"http://192.168.1.27/cm?cmnd=Power%20On"
+                Value = $"http://192.168.1.33/cm?cmnd=Power%20On"
             };
             cardButtons.Add(buttonON);
 
@@ -35,7 +35,7 @@ namespace BMC.Sarah.ChatBot.Dialogs
             {
                 Type = "openUrl",
                 Title = "TurnOff",
-                Value = $"http://192.168.1.27/cm?cmnd=Power%20Off"
+                Value = $"http://192.168.1.33/cm?cmnd=Power%20Off"
             };
             cardButtons.Add(buttonOFF);
 
@@ -47,7 +47,7 @@ namespace BMC.Sarah.ChatBot.Dialogs
             }
             ThumbnailCard card = new ThumbnailCard()
             {
-                Title = "Toilet Lamp",
+                Title = "Kitchen Fan",
                 Images = cardImage == null ? null : new CardImage[] { cardImage },
                 Buttons = cardButtons
             };

@@ -25,7 +25,27 @@
 
         public async Task StartAsync(IDialogContext context)
         {
-            this.ShowOptions(context);
+            //this.ShowOptions(context);
+            await context.PostAsync("Type the SpellWord");
+            context.Wait(this.AuthTurnOn);
+        }
+        public virtual async Task AuthTurnOn(IDialogContext context, IAwaitable<IMessageActivity> result)
+        {
+            var message = await result;
+            string InputUser = message.ToString();
+            string PassCode = "Champion";
+            if (message.Text == PassCode)
+            {
+                await context.PostAsync($"Hello fellas (👍^-^👍)");
+                this.ShowOptions(context);
+            }
+            else
+            {
+                await context.PostAsync($"Wrong SpellWords (¬‿¬)" +
+                                        $"I am rebooting . . .");
+                await context.PostAsync($"Hi there (づ｡◕‿‿◕｡)づ ");
+                context.Done<object>(null);
+            }
         }
         private void ShowOptions(IDialogContext context)
         {

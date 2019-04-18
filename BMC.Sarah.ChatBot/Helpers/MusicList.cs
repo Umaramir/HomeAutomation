@@ -17,8 +17,8 @@ namespace BMC.Sarah.ChatBot.Helpers
         {
             return new List<MusicList>()
             {
-                new MusicList () { Title="Relaxing Music", SubTitle="Flute Japanese", Text="Just Listen and relax", Img="https://padidata.blob.core.windows.net/files/flute.jpg", Url="https://padidata.blob.core.windows.net/files/RelaxingFlute.mp3" },
-                new MusicList () { Title="Ballad Rock Music", SubTitle="Guitar Rock", Text="Just Listen and relax", Img="https://padidata.blob.core.windows.net/files/RockGuitar.PNG", Url="https://padidata.blob.core.windows.net/files/InstrumentalRockBallads.mp3" }
+                new MusicList () { Title="Relaxing Music", SubTitle="Flute Japanese", Text="Just Listen and relax", Img="https://padidata.blob.core.windows.net/files/flute-min.jpg", Url="https://padidata.blob.core.windows.net/files/BeautifulBambooFlute.mp3" }, //Url="https://padidata.blob.core.windows.net/files/RelaxingFlute.mp3" },
+                new MusicList () { Title="Ballad Rock Music", SubTitle="Guitar Rock", Text="Just Listen and relax", Img="https://padidata.blob.core.windows.net/files/RockGuitar.PNG", Url="https://padidata.blob.core.windows.net/files/SHORTRockBallad.mp3" }, //Url="https://padidata.blob.core.windows.net/files/InstrumentalRockBallads.mp3" }
             };
         }public static List<MusicList> GetAllMusicSpirit()
         {

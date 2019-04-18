@@ -7,13 +7,14 @@ using Microsoft.Bot.Connector;
 using Microsoft.Bot.Builder.Scorables.Internals;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Luis.Models;
+using BMC.Security.Web.Helpers;
 
 namespace BMC.Sarah.ChatBot.Dialogs
 {
     public class CancelScorable : ScorableBase<IActivity, string, double>
     {
         private readonly IDialogTask task;
-
+        //static MqttService iot;
         public CancelScorable(IDialogTask task)
         {
             SetField.NotNull(out this.task, nameof(task), task);
@@ -34,6 +35,10 @@ namespace BMC.Sarah.ChatBot.Dialogs
                     return message.Text;
                 }
                 else if (message.Text.Equals("mulai", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    return message.Text;
+                }
+                else if (message.Text.Equals("start", StringComparison.InvariantCultureIgnoreCase))
                 {
                     return message.Text;
                 }
@@ -75,12 +80,12 @@ namespace BMC.Sarah.ChatBot.Dialogs
                 //{
                 //    reply.Text = "salah pw";
                 //}
-
-                var commonResponsesDialog = new MenuDialog();
+                
+                var commonResponsesDialog = new MenuDialog();//AuthDialog();
                 var interruption = commonResponsesDialog.Void<object, IMessageActivity>();
                 this.task.Call(interruption, null);
                 await this.task.PollAsync(token);
-
+               
 
             }
 

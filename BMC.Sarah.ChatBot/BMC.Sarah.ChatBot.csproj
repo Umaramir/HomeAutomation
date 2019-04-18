@@ -163,9 +163,12 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\MessagesController.cs" />
+    <Compile Include="Dialogs\AuthDialog.cs" />
     <Compile Include="Dialogs\CancelScorable.cs" />
     <Compile Include="Dialogs\CommonResponseDialog.cs" />
     <Compile Include="Dialogs\EntertainDialog.cs" />
+    <Compile Include="Dialogs\KitchenFan.cs" />
+    <Compile Include="Dialogs\LuisDialog.cs" />
     <Compile Include="Dialogs\MenuDialog.cs" />
     <Compile Include="Dialogs\MainDialog.cs" />
     <Compile Include="Dialogs\SearchScorable.cs" />
@@ -207,6 +210,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BMC.Security.Models\BMC.Security.Models.csproj">
+      <Project>{1d7cd259-d7d3-4a2f-87ce-2a9714eed9d3}</Project>
+      <Name>BMC.Security.Models</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BMC.Security.Web\BMC.Security.Web.csproj">
       <Project>{37c14745-312d-4e67-bf6c-465acddd9bab}</Project>
       <Name>BMC.Security.Web</Name>

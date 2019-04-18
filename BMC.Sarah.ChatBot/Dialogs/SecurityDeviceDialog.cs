@@ -7,26 +7,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using BMC.Security.Models;
 
 namespace BMC.Sarah.ChatBot.Dialogs
 {
     public class SecurityDeviceDialog : IDialog<object>
     {
         const string Monster = "Monster Voice";
+        const string Scream = "Scream Voice";
+        const string Tornado = "Tornado Voice";
+        const string Police = "Police Voice";
 
         static MqttService iot;
-
+       
         public async Task StartAsync(IDialogContext context)
         {
             this.ShowOptions(context);
         }
         private void ShowOptions(IDialogContext context)
         {
-            PromptDialog.Choice(context, this.TurnOnDevice, new List<string>() { Monster }, "Worry about home?", "Sorry I'm not focus (ಥ﹏ಥ) What again?", 2);
+            PromptDialog.Choice(context, this.TurnOnDevice, new List<string>() { Monster, Scream, Tornado, Police }, "Worry about home?", "Sorry I'm not focus (ಥ﹏ಥ) What again?", 2);
         }
         public virtual async Task MessageReceivedAsync(IDialogContext context, IAwaitable<IMessageActivity> result)
         {
-            //await context.PostAsync($"");
+            await context.PostAsync($"Okeyyy (~˘▾˘)~ ");
             context.Done<object>(null);
         }
         private async Task TurnOnDevice(IDialogContext context, IAwaitable<string> result)
@@ -37,11 +41,25 @@ namespace BMC.Sarah.ChatBot.Dialogs
                 switch (optionSelected)
                 {
                     case Monster:
-                        Activity reply = context.MakeMessage() as Activity;
+                        iot = new MqttService();
+                        //Activity reply = context.MakeMessage() as Activity;
                         /*reply.Attachments.Add(GetAudioCard().ToAttachment());
                         await context.PostAsync(reply);
                         context.Wait(MessageReceivedAsync); */
                         await iot.InvokeMethod("BMCSecurityBot", "PlaySound", new string[] { "monster.mp3" });
+                        context.Done<object>(null);
+                        break;
+                    case Scream:
+                        await iot.InvokeMethod("BMCSecurityBot", "PlaySound", new string[] { "scream.mp3" });
+                        context.Done<object>(null);
+                        break;
+                    case Tornado:
+                        await iot.InvokeMethod("BMCSecurityBot", "PlaySound", new string[] { "tornado.mp3" });
+                        context.Done<object>(null);
+                        break;
+                    case Police:
+                        await iot.InvokeMethod("BMCSecurityBot", "PlaySound", new string[] { "police.mp3" });
+                        context.Done<object>(null);
                         break;
                 }
             }
