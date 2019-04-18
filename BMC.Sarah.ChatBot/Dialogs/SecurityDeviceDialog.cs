@@ -1,5 +1,5 @@
 ﻿using BMC.Sarah.ChatBot.Helpers;
-using BMC.Security.Web.Helpers;
+//using BMC.Security.Web.Helpers;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Connector;
 using System;
@@ -8,6 +8,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using BMC.Security.Models;
+using BMC.Sarah.ChatBot.Services;
+//using BMC.Sarah;
 
 namespace BMC.Sarah.ChatBot.Dialogs
 {
@@ -19,14 +21,15 @@ namespace BMC.Sarah.ChatBot.Dialogs
         const string Police = "Police Voice";
 
         static MqttService iot;
-       
+
         public async Task StartAsync(IDialogContext context)
         {
             this.ShowOptions(context);
+            iot = new MqttService();
         }
         private void ShowOptions(IDialogContext context)
         {
-            PromptDialog.Choice(context, this.TurnOnDevice, new List<string>() { Monster, Scream, Tornado, Police }, "Worry about home?", "Sorry I'm not focus (ಥ﹏ಥ) What again?", 2);
+            PromptDialog.Choice(context, this.TurnOnDevice, new List<string>() { Monster, Scream, Tornado, Police }, "Worry about home?", "Sorry I'm not focus (ಥ﹏ಥ) What again?", 4);
         }
         public virtual async Task MessageReceivedAsync(IDialogContext context, IAwaitable<IMessageActivity> result)
         {
@@ -41,7 +44,7 @@ namespace BMC.Sarah.ChatBot.Dialogs
                 switch (optionSelected)
                 {
                     case Monster:
-                        iot = new MqttService();
+                        //iot = new MqttService();
                         //Activity reply = context.MakeMessage() as Activity;
                         /*reply.Attachments.Add(GetAudioCard().ToAttachment());
                         await context.PostAsync(reply);
